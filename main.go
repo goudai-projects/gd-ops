@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/goudai-projects/gdops/server"
+	"github.com/goudai-projects/gd-ops/server"
 )
 
 func main() {

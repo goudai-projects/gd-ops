@@ -2,7 +2,7 @@ package server
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/goudai-projects/gdops/api/actuator"
+	"github.com/goudai-projects/gd-ops/api/actuator"
 )
 
 func NewRouter() *gin.Engine {

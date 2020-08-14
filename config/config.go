@@ -1,7 +1,7 @@
 package config
 
 import (
-	"github.com/goudai-projects/gdops/log"
+	"github.com/goudai-projects/gd-ops/log"
 	"github.com/spf13/viper"
 )
 

@@ -2,8 +2,8 @@ package server
 
 import (
 	"fmt"
-	"github.com/goudai-projects/gdops/config"
-	"github.com/goudai-projects/gdops/log"
+	"github.com/goudai-projects/gd-ops/config"
+	"github.com/goudai-projects/gd-ops/log"
 )
 
 func Init() {

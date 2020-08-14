@@ -1,4 +1,4 @@
-module github.com/goudai-projects/gdops
+module github.com/goudai-projects/gd-ops
 
 go 1.14
 
