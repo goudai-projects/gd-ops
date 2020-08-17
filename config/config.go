@@ -6,24 +6,28 @@ import (
 )
 
 type Server struct {
-	Port    int    `yaml:"port"`
-	Address string `yaml:"address"`
+	Port    int    `mapstructure:"port"`
+	Address string `mapstructure:"address"`
 }
 
 type Database struct {
-	Dialect  string `yaml:"dialect"`
-	DSN string `yaml:"dsn"`
+	Dialect string `mapstructure:"dialect"`
+	DSN     string `mapstructure:"dsn"`
 }
 
 type Config struct {
-	Server   Server   `yaml:"server"`
-	Database Database `yaml:"database"`
+	Server   Server   `mapstructure:"server"`
+	Database Database `mapstructure:"database"`
 }
 
 func GetConfig() *Config {
 	viper.AddConfigPath(".")
 	viper.AddConfigPath("config/")
 	viper.SetConfigName("app")
+	viper.SetEnvPrefix("GD")
+	_ = viper.BindEnv("database.dsn", "GD_DATABASE_DSN")
+	_ = viper.BindEnv("server.port", "GD_SERVER_PORT")
+	_ = viper.BindEnv("server.address", "GD_SERVER_ADDRESS")
 	viper.AutomaticEnv()
 	err := viper.ReadInConfig()
 	if err != nil {
