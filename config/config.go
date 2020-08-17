@@ -10,27 +10,34 @@ type Server struct {
 	Address string `yaml:"address"`
 }
 
+type Database struct {
+	Dialect  string `yaml:"dialect"`
+	DSN string `yaml:"dsn"`
+}
+
 type Config struct {
-	Server Server `yaml:"server"`
+	Server   Server   `yaml:"server"`
+	Database Database `yaml:"database"`
 }
 
 func GetConfig() *Config {
-	viper.AddConfigPath("./config")
+	viper.AddConfigPath(".")
+	viper.AddConfigPath("config/")
 	viper.SetConfigName("app")
 	viper.AutomaticEnv()
 	err := viper.ReadInConfig()
 	if err != nil {
-		log.Error("读取配置文件失败")
+		log.Fatal("读取配置文件失败")
 	}
 	c := &Config{
 		Server: Server{
 			Address: "0.0.0.0",
-			Port: 8080,
+			Port:    8080,
 		},
 	}
 	err = viper.Unmarshal(c)
 	if err != nil {
-		log.Error("无法解析配置文件")
+		log.Fatal("无法解析配置文件")
 	}
 	return c
 }

@@ -2,10 +2,14 @@ package main
 
 import (
 	"fmt"
+	"github.com/goudai-projects/gd-ops/config"
+	"github.com/goudai-projects/gd-ops/db"
 	"github.com/goudai-projects/gd-ops/server"
 )
 
 func main() {
 	fmt.Println("Hello GD DevOps.")
-	server.Init()
+	cfg := config.GetConfig()
+	server.Init(cfg.Server.Address, cfg.Server.Port)
+	db.Init(cfg.Database.DSN)
 }
