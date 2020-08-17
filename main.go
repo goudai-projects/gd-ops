@@ -10,6 +10,6 @@ import (
 func main() {
 	fmt.Println("Hello GD DevOps.")
 	cfg := config.GetConfig()
-	server.Init(cfg.Server.Address, cfg.Server.Port)
 	db.Init(cfg.Database.DSN)
+	server.Init(cfg.Server.Address, cfg.Server.Port)
 }
