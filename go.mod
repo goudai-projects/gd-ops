@@ -5,7 +5,6 @@ go 1.14
 require (
 	github.com/gin-gonic/gin v1.6.3
 	github.com/go-playground/assert/v2 v2.0.1
-	github.com/jinzhu/gorm v1.9.16
 	github.com/mattn/go-isatty v0.0.12
 	github.com/natefinch/lumberjack v2.0.0+incompatible
 	github.com/spf13/viper v1.7.1
