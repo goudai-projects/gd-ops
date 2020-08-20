@@ -29,6 +29,7 @@ func (s SqlUserStore) Save(user *model.User) (*model.User, *model.AppError) {
 	if err := s.GetDB().Create(user).Error; err != nil {
 		return nil, model.NewAppError("store.sql_user.save.app_error", nil, http.StatusInternalServerError)
 	}
+	return user, nil
 }
 
 func (s SqlUserStore) Update(user *model.User) (*model.UserUpdated, *model.AppError) {
