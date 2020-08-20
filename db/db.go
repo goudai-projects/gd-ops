@@ -16,3 +16,10 @@ func Init(dsn string) {
 		log.Fatal("connect to database fail")
 	}
 }
+
+func Get() *gorm.DB {
+	if db == nil {
+		log.Fatal("db caonnt init ")
+	}
+	return db
+}
