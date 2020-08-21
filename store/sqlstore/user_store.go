@@ -38,7 +38,7 @@ func (s SqlUserStore) Update(user *model.User) (*model.UserUpdated, *model.AppEr
 		return nil, err
 	}
 	var oldUser model.User
-	err := s.GetDB().Find(&oldUser, user.ID).Error
+	err := s.GetDB().Find(&oldUser, user.Id).Error
 	if errors.Is(err, gorm.ErrRecordNotFound) {
 		return nil, model.NewAppError("store.sql_user.update.find.app_error", nil, http.StatusBadRequest)
 	}

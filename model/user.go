@@ -2,7 +2,6 @@ package model
 
 import (
 	"encoding/json"
-	"gorm.io/gorm"
 	"io"
 	"time"
 )
@@ -12,7 +11,7 @@ const (
 )
 
 type User struct {
-	gorm.Model
+	Model
 	Username           string    `json:"username"`
 	Password           string    `json:"password"`
 	Email              string    `json:"email"`

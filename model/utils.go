@@ -2,6 +2,8 @@ package model
 
 import (
 	"encoding/json"
+	"gorm.io/gorm"
+	"time"
 )
 
 type AppError struct {
@@ -49,4 +51,11 @@ func NewPage(pageable *Pageable, total int64, content interface{}) *Page {
 		Total:   total,
 		Content: content,
 	}
+}
+
+type Model struct {
+	Id        uint `gorm:"primarykey"`
+	CreatedAt time.Time
+	UpdatedAt time.Time
+	DeletedAt gorm.DeletedAt `gorm:"index"`
 }

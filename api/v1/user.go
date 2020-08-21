@@ -15,7 +15,7 @@ func (api *Api) InitUser() {
 	userController := UserController{
 		*api,
 	}
-	api.router.GET("/users/search", userController.SearchAllPaged)
+	api.router.GET("/user/search", userController.SearchAllPaged)
 }
 
 func (res *UserController) SearchAllPaged(c *gin.Context) {

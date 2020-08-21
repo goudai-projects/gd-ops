@@ -6,6 +6,7 @@ import (
 	"github.com/goudai-projects/gd-ops/store"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+	"gorm.io/gorm/schema"
 )
 
 type SqlSupplierStores struct {
@@ -21,7 +22,12 @@ type SqlSupplier struct {
 
 func NewSqlSupplier(settings config.Database) *SqlSupplier {
 	supplier := &SqlSupplier{
-		config:   &gorm.Config{},
+		config: &gorm.Config{
+			NamingStrategy: schema.NamingStrategy{
+				TablePrefix:   settings.TablePrefix,
+				SingularTable: true,
+			},
+		},
 		settings: &settings,
 	}
 	supplier.initConnection()
