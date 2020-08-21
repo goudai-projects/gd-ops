@@ -13,22 +13,22 @@ const (
 
 type User struct {
 	gorm.Model
-	Username           string
-	Password           string
-	Email              string
-	Nickname           string
-	LastPasswordUpdate time.Time
-	Locale             string
+	Username           string    `json:"username"`
+	Password           string    `json:"password"`
+	Email              string    `json:"email"`
+	Nickname           string    `json:"nickname"`
+	LastPasswordUpdate time.Time `json:"lastPasswordUpdate"`
+	Locale             string    `json:"locale"`
 }
 
 type UserUpdated struct {
-	Old *User
-	New *User
+	Old *User `json:"old"`
+	New *User `json:"new"`
 }
 
 type UserSearch struct {
 	Pageable
-	Username string
+	Username string `form:"username"`
 }
 
 func (u *User) ToJson() string {
