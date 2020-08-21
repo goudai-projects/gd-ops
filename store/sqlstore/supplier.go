@@ -1,6 +1,7 @@
 package sqlstore
 
 import (
+	"github.com/goudai-projects/gd-ops/config"
 	"github.com/goudai-projects/gd-ops/log"
 	"github.com/goudai-projects/gd-ops/store"
 	"gorm.io/driver/mysql"
@@ -12,26 +13,27 @@ type SqlSupplierStores struct {
 }
 
 type SqlSupplier struct {
-	db     *gorm.DB
-	dsn    string
-	config *gorm.Config
-	stores SqlSupplierStores
+	db       *gorm.DB
+	settings *config.Database
+	config   *gorm.Config
+	stores   SqlSupplierStores
 }
 
-func NewSqlSupplier(dsn string) *SqlSupplier {
+func NewSqlSupplier(settings config.Database) *SqlSupplier {
 	supplier := &SqlSupplier{
-		dsn:    dsn,
-		config: &gorm.Config{},
+		config:   &gorm.Config{},
+		settings: &settings,
 	}
 	supplier.initConnection()
 
+	// init store
 	supplier.stores.user = newSqlUserStore(supplier)
 
 	return supplier
 }
 
 func (supplier *SqlSupplier) initConnection() {
-	db, err := gorm.Open(mysql.Open(supplier.dsn), supplier.config)
+	db, err := gorm.Open(mysql.Open(supplier.settings.DSN), supplier.config)
 	if err != nil {
 		log.Fatal("connect to database fail")
 	}
@@ -40,4 +42,8 @@ func (supplier *SqlSupplier) initConnection() {
 
 func (supplier *SqlSupplier) User() store.UserStore {
 	return supplier.stores.user
+}
+
+func (supplier *SqlSupplier) GetDB() *gorm.DB {
+	return supplier.db
 }

@@ -14,4 +14,5 @@ type UserStore interface {
 	GetAll() ([]*model.User, *model.AppError)
 	SearchAll(search *model.UserSearch) ([]*model.User, *model.AppError)
 	SearchAllPaged(search *model.UserSearch) ([]*model.User, int64, *model.AppError)
+	CreateTableIfNotExists()
 }

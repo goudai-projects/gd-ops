@@ -31,6 +31,22 @@ func NewAppError(id string, params map[string]interface{}, status int) *AppError
 }
 
 type Pageable struct {
-	Page int
-	Size int
+	Page int `form:"page"`
+	Size int `form:"size"`
+}
+
+type Page struct {
+	Page    int         `json:"page"`
+	Size    int         `json:"size"`
+	Total   int64       `json:"total"`
+	Content interface{} `json:"content"`
+}
+
+func NewPage(pageable *Pageable, total int64, content interface{}) *Page {
+	return &Page{
+		Page:    pageable.Page,
+		Size:    pageable.Size,
+		Total:   total,
+		Content: content,
+	}
 }

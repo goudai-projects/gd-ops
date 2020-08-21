@@ -17,7 +17,7 @@ func newSqlUserStore(sqlStore SqlStore) store.UserStore {
 	userStore := &SqlUserStore{
 		SqlStore: sqlStore,
 	}
-
+	userStore.CreateTableIfNotExists()
 	return userStore
 }
 
@@ -29,6 +29,7 @@ func (s SqlUserStore) Save(user *model.User) (*model.User, *model.AppError) {
 	if err := s.GetDB().Create(user).Error; err != nil {
 		return nil, model.NewAppError("store.sql_user.save.app_error", nil, http.StatusInternalServerError)
 	}
+	return user, nil
 }
 
 func (s SqlUserStore) Update(user *model.User) (*model.UserUpdated, *model.AppError) {
@@ -93,5 +94,17 @@ func (s SqlUserStore) SearchAll(search *model.UserSearch) ([]*model.User, *model
 }
 
 func (s SqlUserStore) SearchAllPaged(search *model.UserSearch) ([]*model.User, int64, *model.AppError) {
-	panic("implement me")
+	var users []*model.User
+	var total int64
+	tx := s.GetDB().Where("1 = 1")
+	if username := search.Username; username != "" {
+		tx = tx.Where("username like ?", "%"+username+"%")
+	}
+	tx.Limit(search.Size).Offset(search.Page * search.Size)
+	tx.Find(&users).Count(&total)
+	return users, total, nil
+}
+
+func (s SqlUserStore) CreateTableIfNotExists() {
+	_ = s.GetDB().AutoMigrate(&model.User{})
 }
