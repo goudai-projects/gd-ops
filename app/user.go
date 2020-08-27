@@ -15,3 +15,12 @@ func (s *Server) SearchUsersPage(ctx context.Context, searchModel *model.UserSea
 
 	return s.Store.User().SearchAllPaged(searchModel)
 }
+
+func (s *Server) GetAllUser(ctx context.Context) ([]*model.User, *model.AppError) {
+
+	return s.Store.User().GetAll()
+}
+
+func (s *Server) GetUser(ctx context.Context, userId string) (*model.User, *model.AppError) {
+	return s.Store.User().Get(userId)
+}

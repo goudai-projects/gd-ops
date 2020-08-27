@@ -15,7 +15,9 @@ func (api *Api) InitUser() {
 	userController := UserController{
 		*api,
 	}
-	api.router.GET("/user/search", userController.SearchAllPaged)
+	api.router.GET("/user/:id", userController.GetUser)
+	api.router.GET("/user", userController.SearchAllPaged)
+
 }
 
 func (res *UserController) SearchAllPaged(c *gin.Context) {
@@ -26,7 +28,27 @@ func (res *UserController) SearchAllPaged(c *gin.Context) {
 	}
 	users, total, err := res.Srv.SearchUsersPage(c, &userSearch)
 	if err != nil {
-
+		c.Error(err)
+		return
 	}
 	c.JSON(http.StatusOK, model.NewPage(&userSearch.Pageable, total, users))
+}
+
+func (res *UserController) GetAllUser(c *gin.Context) {
+	users, err := res.Srv.GetAllUser(c)
+	if err != nil {
+		c.Error(err)
+		return
+	}
+	c.JSON(http.StatusOK, users)
+}
+
+func (res *UserController) GetUser(c *gin.Context) {
+	userId := c.Param("id")
+	user, err := res.Srv.GetUser(c, userId)
+	if err != nil {
+		c.Error(err)
+		return
+	}
+	c.JSON(http.StatusOK, user)
 }
