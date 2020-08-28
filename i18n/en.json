@@ -1,0 +1,5 @@
+{
+  "store.sql_user.get.app_error": {
+    "other": "Not found user info"
+  }
+}

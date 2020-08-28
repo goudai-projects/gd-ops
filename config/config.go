@@ -11,8 +11,9 @@ type Server struct {
 }
 
 type Database struct {
-	Dialect string `mapstructure:"dialect"`
-	DSN     string `mapstructure:"dsn"`
+	Dialect     string `mapstructure:"dialect"`
+	DSN         string `mapstructure:"dsn"`
+	TablePrefix string `mapstructure:"tablePrefix"`
 }
 
 type Config struct {

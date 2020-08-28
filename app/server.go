@@ -35,6 +35,7 @@ func (s *Server) initRouter() {
 	router := gin.New()
 	router.Use(gin.Logger())
 	router.Use(gin.Recovery())
+	router.Use(JSONAppErrorHandler())
 	// add routes
 	actuator.Routes(router)
 

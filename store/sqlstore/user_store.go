@@ -38,7 +38,7 @@ func (s SqlUserStore) Update(user *model.User) (*model.UserUpdated, *model.AppEr
 		return nil, err
 	}
 	var oldUser model.User
-	err := s.GetDB().Find(&oldUser, user.ID).Error
+	err := s.GetDB().Find(&oldUser, user.Id).Error
 	if errors.Is(err, gorm.ErrRecordNotFound) {
 		return nil, model.NewAppError("store.sql_user.update.find.app_error", nil, http.StatusBadRequest)
 	}
@@ -73,7 +73,7 @@ func (s SqlUserStore) UpdatePassword(userId, newPassword string) *model.AppError
 
 func (s SqlUserStore) Get(id string) (*model.User, *model.AppError) {
 	var user model.User
-	err := s.GetDB().Find(&user, id).Error
+	err := s.GetDB().First(&user, id).Error
 	if errors.Is(err, gorm.ErrRecordNotFound) {
 		return nil, model.NewAppError("store.sql_user.get.app_error", nil, http.StatusBadRequest)
 	}
@@ -90,7 +90,13 @@ func (s SqlUserStore) GetAll() ([]*model.User, *model.AppError) {
 }
 
 func (s SqlUserStore) SearchAll(search *model.UserSearch) ([]*model.User, *model.AppError) {
-	panic("implement me")
+	var users []*model.User
+	tx := s.GetDB().Where("1 = 1")
+	if username := search.Username; username != "" {
+		tx = tx.Where("username like ?", "%"+username+"%")
+	}
+	tx.Find(&users)
+	return users, nil
 }
 
 func (s SqlUserStore) SearchAllPaged(search *model.UserSearch) ([]*model.User, int64, *model.AppError) {

@@ -2,13 +2,16 @@ package model
 
 import (
 	"encoding/json"
+	"github.com/goudai-projects/gd-ops/utils"
+	"gorm.io/gorm"
+	"time"
 )
 
 type AppError struct {
 	Id         string `json:"id"`
 	Message    string `json:"message"`
 	RequestId  string `json:"request_id,omitempty"`
-	StatusCode int    `json:"status_code,omitempty"` // The http status code
+	StatusCode int    `json:"code,omitempty"` // The http status code
 	params     map[string]interface{}
 }
 
@@ -30,6 +33,10 @@ func NewAppError(id string, params map[string]interface{}, status int) *AppError
 	return ap
 }
 
+func (er *AppError) Localization(lang ...string) {
+	er.Message = utils.Translate(lang, er.Id, er.params)
+}
+
 type Pageable struct {
 	Page int `form:"page"`
 	Size int `form:"size"`
@@ -49,4 +56,11 @@ func NewPage(pageable *Pageable, total int64, content interface{}) *Page {
 		Total:   total,
 		Content: content,
 	}
+}
+
+type Model struct {
+	Id        uint `gorm:"primarykey"`
+	CreatedAt time.Time
+	UpdatedAt time.Time
+	DeletedAt gorm.DeletedAt `gorm:"index"`
 }

@@ -7,10 +7,12 @@ require (
 	github.com/go-playground/assert/v2 v2.0.1
 	github.com/mattn/go-isatty v0.0.12
 	github.com/natefinch/lumberjack v2.0.0+incompatible
+	github.com/nicksnyder/go-i18n/v2 v2.0.3
 	github.com/spf13/viper v1.7.1
 	github.com/stretchr/objx v0.3.0 // indirect
 	github.com/stretchr/testify v1.6.1 // indirect
 	go.uber.org/zap v1.15.0
+	golang.org/x/text v0.3.2
 	gopkg.in/natefinch/lumberjack.v2 v2.0.0 // indirect
 	gopkg.in/yaml.v3 v3.0.0-20200615113413-eeeca48fe776 // indirect
 	gorm.io/driver/mysql v0.3.1
