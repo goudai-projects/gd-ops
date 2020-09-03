@@ -10,7 +10,8 @@ import (
 )
 
 type SqlSupplierStores struct {
-	user store.UserStore
+	user    store.UserStore
+	cluster store.ClusterStore
 }
 
 type SqlSupplier struct {
@@ -34,6 +35,7 @@ func NewSqlSupplier(settings config.Database) *SqlSupplier {
 
 	// init store
 	supplier.stores.user = newSqlUserStore(supplier)
+	supplier.stores.cluster = newSqlClusterStore(supplier)
 
 	return supplier
 }
@@ -48,6 +50,10 @@ func (supplier *SqlSupplier) initConnection() {
 
 func (supplier *SqlSupplier) User() store.UserStore {
 	return supplier.stores.user
+}
+
+func (supplier *SqlSupplier) Cluster() store.ClusterStore {
+	return supplier.stores.cluster
 }
 
 func (supplier *SqlSupplier) GetDB() *gorm.DB {

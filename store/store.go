@@ -4,6 +4,7 @@ import "github.com/goudai-projects/gd-ops/model"
 
 type Store interface {
 	User() UserStore
+	Cluster() ClusterStore
 }
 
 type UserStore interface {
@@ -15,4 +16,10 @@ type UserStore interface {
 	SearchAll(search *model.UserSearch) ([]*model.User, *model.AppError)
 	SearchAllPaged(search *model.UserSearch) ([]*model.User, int64, *model.AppError)
 	CreateTableIfNotExists()
+}
+
+type ClusterStore interface {
+	Save(*model.Cluster) (*model.Cluster, *model.AppError)
+	GetAll() ([]*model.Cluster, *model.AppError)
+	Get(id string) (*model.Cluster, *model.AppError)
 }
